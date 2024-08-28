@@ -12,9 +12,9 @@ interface JobDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(job: JobEntity)
 
-    @Query("SELECT * FROM jobs")
+    @Query("SELECT * FROM bookmarked_jobs")
     fun getAllJobs(): LiveData<List<JobEntity>>
 
-    @Query("DELETE FROM jobs WHERE id = :jobId")
-    suspend fun deleteJob(jobId: String)
+    @Query("DELETE FROM bookmarked_jobs WHERE id = :jobId")
+    suspend fun deleteJob(jobId: Int)
 }

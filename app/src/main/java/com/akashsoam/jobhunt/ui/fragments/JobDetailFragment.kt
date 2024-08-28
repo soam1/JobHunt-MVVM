@@ -32,10 +32,10 @@ class JobDetailFragment : Fragment() {
 
         job?.let {
             binding.apply {
-                jobTitle.text = it.title
-                jobLocation.text = it.location
-                jobSalary.text = it.salary
-                jobPhone.text = it.phone
+                title.text = it.title
+                location.text = it.primary_details.Place
+                salary.text = it.primary_details.Salary
+                phone.text = it.whatsapp_no
                 bookmarkButton.setOnClickListener {
                     jobsViewModel.bookmarkJob(it)
                 }

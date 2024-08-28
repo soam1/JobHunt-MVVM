@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentBookmarksBinding
+import com.akashsoam.jobhunt.models.Job
+import com.akashsoam.jobhunt.models.PrimaryDetails
 import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
 
 class BookmarksFragment : Fragment() {
@@ -30,7 +33,13 @@ class BookmarksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
-        bookmarksAdapter = JobAdapter()
+//        bookmarksAdapter = JobAdapter { jobEntity ->
+//            // Handle click on bookmarked job
+//            jobsViewModel.deleteJob(jobEntity.id)
+//            Toast.makeText(context, "Job removed from bookmarks", Toast.LENGTH_SHORT).show()
+//            bookmarksAdapter.notifyDataSetChanged()
+//            //change the src of the ImageButton to unbookmarked
+//        }
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -38,7 +47,24 @@ class BookmarksFragment : Fragment() {
         }
 
         jobsViewModel.getBookmarkedJobs().observe(viewLifecycleOwner) { jobs ->
-            bookmarksAdapter.submitList(jobs)
+            bookmarksAdapter.submitList(jobs.map {
+                Job(
+                    id = it.id,
+                    title = it.title,
+                    company_name = it.company_name,
+                    primary_details = PrimaryDetails(
+                        Place = it.place,
+                        Salary = it.salary,
+                        Job_Type = "",
+                        Experience = "",
+                        Fees_Charged = "",
+                        Qualification = ""
+                    ),
+                    whatsapp_no = it.whatsapp_no,
+                    is_bookmarked = true,
+                    updated_on = it.updated_on
+                )
+            })
         }
     }
 

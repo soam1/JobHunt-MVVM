@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentJobsBinding
 import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
+import com.akashsoam.jobhunt.util.LoadingState
 import com.akashsoam.jobhunt.utils.LoadingState
 
 class JobsFragment : Fragment() {

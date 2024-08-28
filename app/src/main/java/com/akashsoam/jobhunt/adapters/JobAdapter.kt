@@ -1,25 +1,17 @@
 package com.akashsoam.jobhunt.adapters
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.akashsoam.jobhunt.databinding.ItemJobBinding
-import com.akashsoam.jobhunt.db.JobEntity
 import com.akashsoam.jobhunt.models.Job
 
-package com.akashsoam.jobhunt.ui.adapter
-
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.akashsoam.jobhunt.database.entities.JobEntity
-import com.akashsoam.jobhunt.databinding.ItemJobBinding
-
-class JobAdapter(private val onClick: (JobEntity) -> Unit) :
+class JobAdapter(private val onClick: (Job) -> Unit) :
     RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
 
-    private var jobs = listOf<JobEntity>()
+    private var jobs = listOf<Job>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val binding = ItemJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,19 +27,19 @@ class JobAdapter(private val onClick: (JobEntity) -> Unit) :
         return jobs.size
     }
 
-    fun submitList(newJobs: List<JobEntity>) {
+    fun submitList(newJobs: List<Job>) {
         jobs = newJobs
         notifyDataSetChanged()
     }
 
     inner class JobViewHolder(private val binding: ItemJobBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(job: JobEntity) {
+        fun bind(job: Job) {
             binding.apply {
-                jobTitle.text = job.title
-                jobLocation.text = job.location
-                jobSalary.text = job.salary
-                jobPhone.text = job.phone
+                title.text = job.title
+                location.text = job.primary_details.Place
+                salary.text = job.primary_details.Salary
+                phone.text = job.whatsapp_no
                 root.setOnClickListener { onClick(job) }
             }
         }
