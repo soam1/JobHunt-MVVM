@@ -1,29 +1,16 @@
 package com.akashsoam.jobhunt.api
 
-import com.akashsoam.jobhunt.util.Constants
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInstance {
-    companion object {
-        private val retrofit: Retrofit by lazy {
-            val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build()
+object RetrofitInstance {
+    private const val BASE_URL = "https://testapi.getlokalapp.com/"
 
-            Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
-        }
-
-        val api: JobsApiServiceInterface by lazy {
-            retrofit.create(JobsApiServiceInterface::class.java)
-        }
+    val api: JobsApiServiceInterface by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(JobsApiServiceInterface::class.java)
     }
 }

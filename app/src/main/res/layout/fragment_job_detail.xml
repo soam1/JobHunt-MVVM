@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".JobDetailFragment">
+    tools:context="ui.fragments.JobDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/jobTitle"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Job Title"
@@ -19,28 +19,28 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/jobLocation"
+            android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Location" />
 
         <TextView
-            android:id="@+id/jobSalary"
+            android:id="@+id/textViewSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Salary" />
 
         <TextView
-            android:id="@+id/jobPhone"
+            android:id="@+id/textViewPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Phone" />
 
         <TextView
-            android:id="@+id/jobDetails"
+            android:id="@+id/textViewDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

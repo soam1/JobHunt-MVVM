@@ -1,12 +1,14 @@
-package com.akashsoam.jobhunt.db
+package com.akashsoam.jobhunt.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.akashsoam.jobhunt.model.Job
 
-@Database(entities = [JobEntity::class], version = 1)
+@Database(entities = [Job::class], version = 1)
 abstract class JobDatabase : RoomDatabase() {
+
     abstract fun jobDao(): JobDao
 
     companion object {
