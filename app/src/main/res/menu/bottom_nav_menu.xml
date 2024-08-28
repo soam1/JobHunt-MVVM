@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/jobsFragment"
+        android:icon="@drawable/ic_jobs"
+        android:title="Jobs" />
+
+    <item
+        android:id="@+id/bookmarksFragment"
+        android:icon="@drawable/ic_bookmarks"
+        android:title="Bookmarks" />
+
+</menu>
