@@ -2,15 +2,22 @@ package com.akashsoam.jobhunt.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.akashsoam.jobhunt.databinding.ItemJobBinding
+import com.akashsoam.jobhunt.db.JobEntity
 import com.akashsoam.jobhunt.models.Job
-import com.akashsoam.jobhunt.ui.fragments.JobsFragmentDirections
 
-class JobAdapter : ListAdapter<Job, JobAdapter.JobViewHolder>(JobDiffCallback()) {
+class JobAdapter(
+    private val onItemClickListener: (JobEntity) -> Unit
+) : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
+
+    private var jobList: List<JobEntity> = emptyList()
+
+    fun submitList(jobs: List<JobEntity>) {
+        jobList = jobs
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val binding = ItemJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,25 +25,29 @@ class JobAdapter : ListAdapter<Job, JobAdapter.JobViewHolder>(JobDiffCallback())
     }
 
     override fun onBindViewHolder(holder: JobViewHolder, position: Int) {
-        val job = getItem(position)
+        val job = jobList[position]
         holder.bind(job)
+    }
+
+    override fun getItemCount(): Int {
+        return jobList.size
     }
 
     inner class JobViewHolder(private val binding: ItemJobBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(job: Job) {
-            binding.title.text = job.title
-            binding.location.text = job.location
-            binding.salary.text = job.salary
-
-            binding.root.setOnClickListener {
-                val direction = JobsFragmentDirections.actionJobsFragmentToJobDetailFragment(job)
-                it.findNavController().navigate(direction)
+        fun bind(job: JobEntity) {
+            binding.apply {
+                title.text = job.title
+                location.text = job.location
+                salary.text = job.salary
+                root.setOnClickListener {
+                    onItemClickListener(job)
+                }
             }
         }
     }
 }
+
 
 class JobDiffCallback : DiffUtil.ItemCallback<Job>() {
     override fun areItemsTheSame(oldItem: Job, newItem: Job): Boolean {
