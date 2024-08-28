@@ -3,7 +3,7 @@ package com.akashsoam.jobhunt.repository
 import androidx.lifecycle.LiveData
 import com.akashsoam.jobhunt.api.RetrofitInstance
 import com.akashsoam.jobhunt.database.JobDao
-import com.akashsoam.jobhunt.model.Job
+import com.akashsoam.jobhunt.models.Job
 
 class JobRepository(private val jobDao: JobDao) {
 
@@ -17,7 +17,7 @@ class JobRepository(private val jobDao: JobDao) {
         jobDao.deleteJob(job)
     }
 
-    suspend fun getJobs(page: Int): List<com.akashsoam.jobhunt.models.Job> {
+    suspend fun getJobs(page: Int): List<Job> {
         return RetrofitInstance.api.getJobs(page)
     }
 }

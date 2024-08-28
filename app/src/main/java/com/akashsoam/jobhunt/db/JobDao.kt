@@ -1,8 +1,12 @@
 package com.akashsoam.jobhunt.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
-import com.akashsoam.jobhunt.model.Job
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.akashsoam.jobhunt.models.Job
 
 @Dao
 interface JobDao {

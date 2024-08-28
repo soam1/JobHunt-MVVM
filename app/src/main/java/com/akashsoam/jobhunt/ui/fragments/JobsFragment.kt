@@ -5,18 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.akashsoam.jobhunt.adapter.JobsAdapter
+import com.akashsoam.jobhunt.adapters.JobAdapter
+import com.akashsoam.jobhunt.database.JobDatabase
 import com.akashsoam.jobhunt.databinding.FragmentJobsBinding
+import com.akashsoam.jobhunt.repository.JobRepository
 import com.akashsoam.jobhunt.viewmodel.JobsViewModel
+import com.akashsoam.jobhunt.viewmodel.JobsViewModelFactory
 
 class JobsFragment : Fragment() {
 
     private var _binding: FragmentJobsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var jobsViewModel: JobsViewModel
+
+    private val jobsViewModel: JobsViewModel by viewModels {
+        JobsViewModelFactory(JobRepository(JobDatabase.getDatabase(requireContext()).jobDao()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,31 +34,17 @@ class JobsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
-        val adapter = JobsAdapter { job ->
-            // Handle job item click, navigate to JobDetailFragment
-            val action = JobsFragmentDirections.actionJobsFragmentToJobDetailFragment(job)
-            findNavController().navigate(action)
-        }
-
+        val jobAdapter = JobAdapter()
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            this.adapter = adapter
+            adapter = jobAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
 
-        jobsViewModel.jobsLiveData.observe(viewLifecycleOwner, { jobs ->
-            adapter.submitList(jobs)
-        })
+        jobsViewModel.jobs.observe(viewLifecycleOwner) { jobs ->
+            jobAdapter.submitList(jobs)
+        }
 
-        jobsViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        })
-
-        jobsViewModel.errorLiveData.observe(viewLifecycleOwner, { errorMessage ->
-            // Handle errors
-        })
-
-        jobsViewModel.fetchJobs()
+        jobsViewModel.getJobs(1)  // Load the first page of jobs
     }
 
     override fun onDestroyView() {
