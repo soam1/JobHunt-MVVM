@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +6,6 @@
     <fragment
         android:id="@+id/jobsFragment"
         android:name="com.akashsoam.jobhunt.ui.fragments.JobsFragment"
-        android:label="Jobs"
         tools:layout="@layout/fragment_jobs">
         <action
             android:id="@+id/action_jobsFragment_to_jobDetailFragment"
@@ -17,7 +15,6 @@
     <fragment
         android:id="@+id/jobDetailFragment"
         android:name="com.akashsoam.jobhunt.ui.fragments.JobDetailFragment"
-        android:label="Job Details"
         tools:layout="@layout/fragment_job_detail">
         <argument
             android:name="job"
@@ -27,10 +24,5 @@
     <fragment
         android:id="@+id/bookmarksFragment"
         android:name="com.akashsoam.jobhunt.ui.fragments.BookmarksFragment"
-        android:label="Bookmarks"
-        tools:layout="@layout/fragment_bookmarks">
-        <action
-            android:id="@+id/action_bookmarksFragment_to_jobDetailFragment"
-            app:destination="@id/jobDetailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_bookmarks" />
 </navigation>

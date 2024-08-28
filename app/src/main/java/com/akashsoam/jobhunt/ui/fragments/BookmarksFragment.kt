@@ -5,29 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.akashsoam.jobhunt.adapters.JobAdapter
-import com.akashsoam.jobhunt.api.RetrofitInstance
-import com.akashsoam.jobhunt.database.JobDatabase
 import com.akashsoam.jobhunt.databinding.FragmentBookmarksBinding
-import com.akashsoam.jobhunt.repository.JobRepository
-import com.akashsoam.jobhunt.ui.JobViewModel
-import com.akashsoam.jobhunt.ui.JobsViewModelFactory
+import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
 
 class BookmarksFragment : Fragment() {
 
     private var _binding: FragmentBookmarksBinding? = null
     private val binding get() = _binding!!
-
-    private val jobsViewModel: JobViewModel by viewModels {
-        JobsViewModelFactory(
-            JobRepository(
-                RetrofitInstance.api,
-                JobDatabase.getDatabase(requireContext()).jobDao()
-            )
-        )
-    }
+    private lateinit var jobsViewModel: JobsViewModel
+    private lateinit var bookmarksAdapter: JobAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,14 +29,16 @@ class BookmarksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val jobAdapter = JobAdapter()
+        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+        bookmarksAdapter = JobAdapter()
+
         binding.recyclerView.apply {
-            adapter = jobAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(context)
+            adapter = bookmarksAdapter
         }
 
-        jobsViewModel.jobs.observe(viewLifecycleOwner) { jobs ->
-            jobAdapter.submitList(jobs)
+        jobsViewModel.getBookmarkedJobs().observe(viewLifecycleOwner) { jobs ->
+            bookmarksAdapter.submitList(jobs)
         }
     }
 

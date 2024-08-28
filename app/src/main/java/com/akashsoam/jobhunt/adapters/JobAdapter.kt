@@ -8,16 +8,18 @@ import com.akashsoam.jobhunt.databinding.ItemJobBinding
 import com.akashsoam.jobhunt.db.JobEntity
 import com.akashsoam.jobhunt.models.Job
 
-class JobAdapter(
-    private val onItemClickListener: (JobEntity) -> Unit
-) : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
+package com.akashsoam.jobhunt.ui.adapter
 
-    private var jobList: List<JobEntity> = emptyList()
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.akashsoam.jobhunt.database.entities.JobEntity
+import com.akashsoam.jobhunt.databinding.ItemJobBinding
 
-    fun submitList(jobs: List<JobEntity>) {
-        jobList = jobs
-        notifyDataSetChanged()
-    }
+class JobAdapter(private val onClick: (JobEntity) -> Unit) :
+    RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
+
+    private var jobs = listOf<JobEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val binding = ItemJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,24 +27,28 @@ class JobAdapter(
     }
 
     override fun onBindViewHolder(holder: JobViewHolder, position: Int) {
-        val job = jobList[position]
+        val job = jobs[position]
         holder.bind(job)
     }
 
     override fun getItemCount(): Int {
-        return jobList.size
+        return jobs.size
+    }
+
+    fun submitList(newJobs: List<JobEntity>) {
+        jobs = newJobs
+        notifyDataSetChanged()
     }
 
     inner class JobViewHolder(private val binding: ItemJobBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(job: JobEntity) {
             binding.apply {
-                title.text = job.title
-                location.text = job.location
-                salary.text = job.salary
-                root.setOnClickListener {
-                    onItemClickListener(job)
-                }
+                jobTitle.text = job.title
+                jobLocation.text = job.location
+                jobSalary.text = job.salary
+                jobPhone.text = job.phone
+                root.setOnClickListener { onClick(job) }
             }
         }
     }

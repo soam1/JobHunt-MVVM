@@ -4,13 +4,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://testapi.getlokalapp.com/"
-
-    val api: JobsApiServiceInterface by lazy {
+    private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl("https://testapi.getlokalapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(JobsApiServiceInterface::class.java)
+    }
+
+    val api: JobsApiServiceInterface by lazy {
+        retrofit.create(JobsApiServiceInterface::class.java)
     }
 }

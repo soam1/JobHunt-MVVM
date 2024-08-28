@@ -5,36 +5,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.akashsoam.jobhunt.databinding.FragmentJobDetailBinding
-import com.akashsoam.jobhunt.db.JobEntity
-import com.akashsoam.jobhunt.ui.JobViewModel
+import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
 
 class JobDetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentJobDetailBinding
-    private lateinit var viewModel: JobViewModel
-    private var jobEntity: JobEntity? = null
+    private var _binding: FragmentJobDetailBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var jobsViewModel: JobsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentJobDetailBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentJobDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Assuming the jobEntity is passed as an argument
-        jobEntity = arguments?.getParcelable<JobEntity>("jobEntity")
+        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
 
-        jobEntity?.let {
-            binding.title.text = it.title
-            binding.location.text = it.location
-            binding.salary.text = it.salary
-            binding.phone.text = it.phone
-//            binding.detailsTextView.text = it.details
+        val job = arguments?.let { JobDetailFragmentArgs.fromBundle(it).job }
+
+        job?.let {
+            binding.apply {
+                jobTitle.text = it.title
+                jobLocation.text = it.location
+                jobSalary.text = it.salary
+                jobPhone.text = it.phone
+                bookmarkButton.setOnClickListener {
+                    jobsViewModel.bookmarkJob(it)
+                }
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
