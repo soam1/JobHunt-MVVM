@@ -5,36 +5,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
 import com.akashsoam.jobhunt.databinding.FragmentJobDetailBinding
+import com.akashsoam.jobhunt.db.JobEntity
+import com.akashsoam.jobhunt.ui.JobViewModel
 
 class JobDetailFragment : Fragment() {
 
-    private var _binding: FragmentJobDetailBinding? = null
-    private val binding get() = _binding!!
-
-    private val args: JobDetailFragmentArgs by navArgs()
+    private lateinit var binding: FragmentJobDetailBinding
+    private lateinit var viewModel: JobViewModel
+    private var jobEntity: JobEntity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentJobDetailBinding.inflate(inflater, container, false)
+    ): View? {
+        binding = FragmentJobDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val job = args.job
-        binding.title.text = job.title
-        binding.location.text = job.location
-        binding.salary.text = job.salary
-        binding.phone.text = job.phone
-    }
+        // Assuming the jobEntity is passed as an argument
+        jobEntity = arguments?.getParcelable<JobEntity>("jobEntity")
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        jobEntity?.let {
+            binding.title.text = it.title
+            binding.location.text = it.location
+            binding.salary.text = it.salary
+            binding.phone.text = it.phone
+//            binding.detailsTextView.text = it.details
+        }
     }
 }

@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.akashsoam.jobhunt.model.Job
+import com.akashsoam.jobhunt.db.JobDao
+import com.akashsoam.jobhunt.db.JobEntity
 
-@Database(entities = [Job::class], version = 1)
+@Database(entities = [JobEntity::class], version = 1)
 abstract class JobDatabase : RoomDatabase() {
-
     abstract fun jobDao(): JobDao
 
     companion object {
@@ -18,9 +18,7 @@ abstract class JobDatabase : RoomDatabase() {
         fun getDatabase(context: Context): JobDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    JobDatabase::class.java,
-                    "job_database.db"
+                    context.applicationContext, JobDatabase::class.java, "job_database"
                 ).build()
                 INSTANCE = instance
                 instance

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.akashsoam.jobhunt.databinding.ItemJobBinding
-import com.akashsoam.jobhunt.model.Job
+import com.akashsoam.jobhunt.models.Job
 import com.akashsoam.jobhunt.ui.fragments.JobsFragmentDirections
 
 class JobAdapter : ListAdapter<Job, JobAdapter.JobViewHolder>(JobDiffCallback()) {

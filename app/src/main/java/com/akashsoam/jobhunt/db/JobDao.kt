@@ -1,4 +1,4 @@
-package com.akashsoam.jobhunt.database
+package com.akashsoam.jobhunt.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,16 +6,15 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.akashsoam.jobhunt.models.Job
 
 @Dao
 interface JobDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertJob(job: Job)
+    suspend fun bookmarkJob(job: JobEntity)
 
     @Delete
-    suspend fun deleteJob(job: Job)
+    suspend fun removeJob(job: JobEntity)
 
-    @Query("SELECT * FROM jobs")
-    fun getAllJobs(): LiveData<List<Job>>
+    @Query("SELECT * FROM bookmarked_jobs")
+    fun getAllBookmarkedJobs(): LiveData<List<JobEntity>>
 }

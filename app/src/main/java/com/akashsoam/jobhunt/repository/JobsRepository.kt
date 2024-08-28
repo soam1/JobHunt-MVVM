@@ -1,23 +1,30 @@
 package com.akashsoam.jobhunt.repository
 
 import androidx.lifecycle.LiveData
-import com.akashsoam.jobhunt.api.RetrofitInstance
-import com.akashsoam.jobhunt.database.JobDao
+import com.akashsoam.jobhunt.api.JobsApiServiceInterface
+import com.akashsoam.jobhunt.db.JobDao
+import com.akashsoam.jobhunt.db.JobEntity
 import com.akashsoam.jobhunt.models.Job
 
-class JobRepository(private val jobDao: JobDao) {
+class JobRepository(
+    private val api: JobsApiServiceInterface,
+    private val jobDao: JobDao
+) {
 
-    val allJobs: LiveData<List<Job>> = jobDao.getAllJobs()
-
-    suspend fun insertJob(job: Job) {
-        jobDao.insertJob(job)
+    suspend fun getJobsFromApi(page: Int): List<Job> {
+        val response = api.getJobs(page)
+        return response.jobs
     }
 
-    suspend fun deleteJob(job: Job) {
-        jobDao.deleteJob(job)
+    suspend fun bookmarkJob(job: JobEntity) {
+        jobDao.bookmarkJob(job)
     }
 
-    suspend fun getJobs(page: Int): List<Job> {
-        return RetrofitInstance.api.getJobs(page)
+    suspend fun removeJob(job: JobEntity) {
+        jobDao.removeJob(job)
+    }
+
+    fun getAllBookmarkedJobs(): LiveData<List<JobEntity>> {
+        return jobDao.getAllBookmarkedJobs()
     }
 }
