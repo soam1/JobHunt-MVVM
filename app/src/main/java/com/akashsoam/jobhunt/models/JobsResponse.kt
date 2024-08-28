@@ -1,5 +1,5 @@
 package com.akashsoam.jobhunt.models
 
-data class JobResponse(
+data class JobsResponse(
     val results: List<Result>
 )

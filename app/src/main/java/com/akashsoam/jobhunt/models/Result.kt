@@ -1,5 +1,9 @@
 package com.akashsoam.jobhunt.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+//@Entity(tableName = "jobs")
 data class Result(
     val advertiser: Int,
     val amount: String,
@@ -19,6 +23,7 @@ data class Result(
     val fee_details: FeeDetails,
     val fees_charged: Int,
     val fees_text: String,
+//    @PrimaryKey(autoGenerate = false)
     val id: Int,
     val is_applied: Boolean,
     val is_bookmarked: Boolean,
