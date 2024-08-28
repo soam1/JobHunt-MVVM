@@ -18,11 +18,15 @@
         tools:layout="@layout/fragment_job_detail">
         <argument
             android:name="job"
-            app:argType="com.akashsoam.jobhunt.model.Job" />
+            app:argType="com.akashsoam.jobhunt.models.Job" />
     </fragment>
 
     <fragment
         android:id="@+id/bookmarksFragment"
         android:name="com.akashsoam.jobhunt.ui.fragments.BookmarksFragment"
-        tools:layout="@layout/fragment_bookmarks" />
+        tools:layout="@layout/fragment_bookmarks" >
+        <action
+            android:id="@+id/action_bookmarksFragment_to_jobDetailFragment"
+            app:destination="@id/jobDetailFragment" />
+    </fragment>
 </navigation>

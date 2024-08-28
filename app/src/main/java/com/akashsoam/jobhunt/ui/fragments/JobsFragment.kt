@@ -13,7 +13,6 @@ import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentJobsBinding
 import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
 import com.akashsoam.jobhunt.util.LoadingState
-import com.akashsoam.jobhunt.utils.LoadingState
 
 class JobsFragment : Fragment() {
 
@@ -25,8 +24,7 @@ class JobsFragment : Fragment() {
     private var isLoading = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJobsBinding.inflate(inflater, container, false)
         return binding.root
@@ -92,6 +90,15 @@ class JobsFragment : Fragment() {
                     binding.errorTextView.apply {
                         visibility = View.VISIBLE
                         text = "No jobs available at the moment."
+                    }
+                }
+
+                null -> { // Handle the null case
+                    binding.progressBar.visibility = View.GONE
+                    binding.recyclerView.visibility = View.GONE
+                    binding.errorTextView.apply {
+                        visibility = View.VISIBLE
+                        text = "Unexpected error. Please try again."
                     }
                 }
             }

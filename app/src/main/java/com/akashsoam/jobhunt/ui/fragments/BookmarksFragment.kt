@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentBookmarksBinding
@@ -40,6 +40,13 @@ class BookmarksFragment : Fragment() {
 //            bookmarksAdapter.notifyDataSetChanged()
 //            //change the src of the ImageButton to unbookmarked
 //        }
+
+        bookmarksAdapter = JobAdapter { job ->
+            // Handle click on bookmarked job
+//            //go to the job details page
+            val action = BookmarksFragmentDirections.actionBookmarksFragmentToJobDetailFragment(job)
+            binding.root.findNavController().navigate(action)
+        }
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)

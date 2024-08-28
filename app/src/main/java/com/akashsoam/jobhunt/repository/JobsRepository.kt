@@ -26,7 +26,7 @@ class JobsRepository(application: Application) {
 
     fun getBookmarkedJobs() = jobDao.getAllJobs()
 
-    suspend fun deleteJob(jobId: Int) {
+    suspend fun deleteJob(jobId : Int) {
         jobDao.deleteJob(jobId)
     }
 }
