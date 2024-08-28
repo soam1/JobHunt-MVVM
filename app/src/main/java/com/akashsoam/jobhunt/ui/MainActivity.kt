@@ -3,7 +3,7 @@ package com.akashsoam.jobhunt.ui
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.akashsoam.jobhunt.R
 import com.akashsoam.jobhunt.databinding.ActivityMainBinding
@@ -22,9 +22,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//        bottomNav.setupWithNavController(navController)
+        val navController = findNavController(R.id.nav_host_fragment)
+        binding.bottomNavigation.setupWithNavController(navController)
+
+
 
     }
 }
