@@ -22,8 +22,8 @@ class RetrofitInstance {
                 .build()
         }
 
-        val api: JobsApiInterface by lazy {
-            retrofit.create(JobsApiInterface::class.java)
+        val api: JobsApiServiceInterface by lazy {
+            retrofit.create(JobsApiServiceInterface::class.java)
         }
     }
 }
