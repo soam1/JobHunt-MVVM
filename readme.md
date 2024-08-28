@@ -1,39 +1,39 @@
 JobHunt-MVVM/
 ├── api/
-│   ├── JobsApiServiceInterface.kt
-│   └── RetrofitInstance.kt
+│ ├── JobsApiServiceInterface.kt
+│ └── RetrofitInstance.kt
 ├── database/
-│   ├── JobDao.kt
-│   ├── JobDatabase.kt
-│   └── entities/
-│       └── JobEntity.kt
+│ ├── JobDao.kt
+│ ├── JobDatabase.kt
+│ └── entities/
+│ └── JobEntity.kt
 ├── repository/
-│   └── JobsRepository.kt
+│ └── JobsRepository.kt
 ├── ui/
-│   ├── adapter/
-│   │   └── JobAdapter.kt
-│   ├── fragments/
-│   │   ├── JobsFragment.kt
-│   │   ├── JobDetailFragment.kt
-│   │   └── BookmarksFragment.kt
-│   ├── viewmodel/
-│   │   └── JobsViewModel.kt
-│   └── MainActivity.kt
+│ ├── adapter/
+│ │ └── JobAdapter.kt
+│ ├── fragments/
+│ │ ├── JobsFragment.kt
+│ │ ├── JobDetailFragment.kt
+│ │ └── BookmarksFragment.kt
+│ ├── viewmodel/
+│ │ └── JobsViewModel.kt
+│ └── MainActivity.kt
 ├── utils/
-│   └── LoadingState.kt
+│ └── LoadingState.kt
 ├── res/
-│   ├── layout/
-│   │   ├── fragment_jobs.xml
-│   │   ├── fragment_job_detail.xml
-│   │   ├── fragment_bookmarks.xml
-│   │   ├── item_job.xml
-│   │   └── activity_main.xml
-│   ├── navigation/
-│   │   └── nav_graph.xml
-│   ├── values/
-│   │   ├── colors.xml
-│   │   ├── strings.xml
-│   │   └── styles.xml
+│ ├── layout/
+│ │ ├── fragment_jobs.xml
+│ │ ├── fragment_job_detail.xml
+│ │ ├── fragment_bookmarks.xml
+│ │ ├── item_job.xml
+│ │ └── activity_main.xml
+│ ├── navigation/
+│ │ └── nav_graph.xml
+│ ├── values/
+│ │ ├── colors.xml
+│ │ ├── strings.xml
+│ │ └── styles.xml
 ├── .gitignore
 ├── build.gradle
 ├── settings.gradle
@@ -117,6 +117,10 @@ This project follows the **MVVM (Model-View-ViewModel)** architecture pattern:
 - **Bookmarking Jobs:** Click the bookmark icon in the job details to save a job for offline
   viewing.
 - **Viewing Bookmarks:** Switch to the Bookmarks tab to see all your saved jobs.
+
+## Video Demo
+
+![Video Demo](clips/demo_vdo1.mp4)
 
 ## Contributing
 
