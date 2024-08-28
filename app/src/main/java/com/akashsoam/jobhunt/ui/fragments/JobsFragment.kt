@@ -1,6 +1,7 @@
 package com.akashsoam.jobhunt.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,8 @@ class JobsFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
                     binding.errorTextView.visibility = View.GONE
+                    Log.d("JobsFragment", "Loading jobs for page: $currentPage")
+
                 }
 
                 LoadingState.SUCCESS -> {

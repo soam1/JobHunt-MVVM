@@ -37,8 +37,16 @@ class JobAdapter(private val onClick: (Job) -> Unit) :
         fun bind(job: Job) {
             binding.apply {
                 title.text = job.title
-                location.text = job.primary_details.Place
-                salary.text = job.primary_details.Salary
+                if (job.primary_details != null) {
+                    location.text = job.primary_details.Place
+                } else {
+                    location.text = "Location not available"
+                }
+                if (job.primary_details != null) {
+                    salary.text = job.primary_details.Salary
+                } else {
+                    salary.text = "Salary not available"
+                }
                 phone.text = job.whatsapp_no
                 root.setOnClickListener { onClick(job) }
             }

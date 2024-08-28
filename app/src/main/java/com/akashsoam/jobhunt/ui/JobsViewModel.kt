@@ -1,6 +1,7 @@
 package com.akashsoam.jobhunt.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,7 +28,11 @@ class JobsViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             _loadingState.postValue(LoadingState.LOADING)
             val result = repository.getJobsFromApi(page)
+            Log.d("JobsViewModel", "page in viewmodel is $page")
+
+            Log.d("JobsViewModel", "loadJobs: $result")
             if (result.isNotEmpty()) {
+//                Log.d("JobsViewModel", "loadJobs: $result")
                 currentJobs.addAll(result)
                 _jobs.postValue(currentJobs)
                 _loadingState.postValue(LoadingState.SUCCESS)
@@ -45,8 +50,18 @@ class JobsViewModel(application: Application) : AndroidViewModel(application) {
                 id = job.id,
                 title = job.title,
                 company_name = job.company_name,
-                place = job.primary_details.Place,
-                salary = job.primary_details.Salary,
+                place = if (job.primary_details != null) {
+                    job.primary_details.Place
+                } else {
+                    "Location not available"
+                },
+//                        place = job . primary_details . Place,
+                salary = if (job.primary_details != null) {
+                    job.primary_details.Salary
+                } else {
+                    "Salary not available"
+                },
+//                salary = job.primary_details.Salary,
                 whatsapp_no = job.whatsapp_no,
                 updated_on = job.updated_on
             )

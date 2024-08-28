@@ -35,8 +35,8 @@ class JobDetailFragment : Fragment() {
         job?.let { jobDetails: Job ->  // Specify the type explicitly
             binding.apply {
                 title.text = jobDetails.title
-                location.text = jobDetails.primary_details.Place
-                salary.text = jobDetails.primary_details.Salary
+                location.text = jobDetails.primary_details?.Place
+                salary.text = jobDetails.primary_details?.Salary
                 phone.text = jobDetails.whatsapp_no
                 bookmarkButton.setOnClickListener {
                     jobsViewModel.bookmarkJob(jobDetails)

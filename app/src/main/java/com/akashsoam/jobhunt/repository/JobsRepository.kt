@@ -1,6 +1,7 @@
 package com.akashsoam.jobhunt.repository
 
 import android.app.Application
+import android.util.Log
 import com.akashsoam.jobhunt.api.RetrofitInstance
 import com.akashsoam.jobhunt.db.JobDatabase
 import com.akashsoam.jobhunt.db.JobEntity
@@ -12,13 +13,22 @@ class JobsRepository(application: Application) {
     private val jobsApiService = RetrofitInstance.api
 
     suspend fun getJobsFromApi(page: Int): List<Job> {
-        val response = jobsApiService.getJobs(page)
-        return if (response.isSuccessful) {
-            response.body()?.jobs ?: emptyList()
-        } else {
+        return try {
+            val response = jobsApiService.getJobs(page)
+            if (response.isSuccessful) {
+                val jobs = response.body()?.results ?: emptyList()
+                Log.d("JobsRepository", "Fetched jobs: $jobs")
+                jobs
+            } else {
+                Log.e("JobsRepository", "API call failed: ${response.errorBody()?.string()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            Log.e("JobsRepository", "Exception during API call", e)
             emptyList()
         }
     }
+
 
     suspend fun saveJob(jobEntity: JobEntity) {
         jobDao.insert(jobEntity)
@@ -26,7 +36,7 @@ class JobsRepository(application: Application) {
 
     fun getBookmarkedJobs() = jobDao.getAllJobs()
 
-    suspend fun deleteJob(jobId : Int) {
+    suspend fun deleteJob(jobId: Int) {
         jobDao.deleteJob(jobId)
     }
 }
