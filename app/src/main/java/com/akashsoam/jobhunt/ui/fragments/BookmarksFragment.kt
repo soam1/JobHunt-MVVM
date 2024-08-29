@@ -93,7 +93,10 @@ class BookmarksFragment : Fragment() {
                 val job = bookmarksAdapter.jobs[position]
                 jobsViewModel.deleteJob(job.id)
                 Snackbar.make(binding.root, "Job removed from bookmarks", Snackbar.LENGTH_SHORT)
-                    .show()
+                    .setAction("Undo") {
+                        jobsViewModel.bookmarkJob(job)
+                    }.show()
+
             }
         }
 
