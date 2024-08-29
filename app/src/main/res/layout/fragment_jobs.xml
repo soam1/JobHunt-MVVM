@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorOnBackground">
+
+    <!--    heading with name of fragment-->
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Jobs"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/heading"
         android:layout_centerInParent="true"
         android:visibility="visible" />
 
@@ -29,13 +42,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Failed to load data. Please try again."
+            android:textColor="@color/colorError"
             android:textSize="16sp" />
 
         <Button
             android:id="@+id/retryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Retry" />
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Retry"
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
 
 </RelativeLayout>

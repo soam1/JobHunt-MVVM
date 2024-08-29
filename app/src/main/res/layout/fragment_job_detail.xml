@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="12dp">
+    android:layout_margin="12dp"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/title"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Job Title"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +25,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Location"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
@@ -32,15 +35,18 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Salary"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/location" />
 
     <TextView
         android:id="@+id/phone"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Phone"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/salary" />
 
