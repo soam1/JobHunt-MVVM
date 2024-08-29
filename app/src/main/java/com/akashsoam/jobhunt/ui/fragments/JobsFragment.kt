@@ -36,6 +36,12 @@ class JobsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+        setupRecyclerView()
+        observeViewModel()
+        loadNextPage()  // Load the first page
+    }
+
+    private fun setupRecyclerView() {
         jobsAdapter = JobAdapter(onClick = { job ->
             val action = JobsFragmentDirections.actionJobsFragmentToJobDetailFragment(job)
             findNavController().navigate(action)
@@ -65,7 +71,9 @@ class JobsFragment : Fragment() {
                 }
             })
         }
+    }
 
+    private fun observeViewModel() {
         jobsViewModel.jobs.observe(viewLifecycleOwner) { jobs ->
             jobsAdapter.submitList(jobs)
             isLoading = false
@@ -76,47 +84,44 @@ class JobsFragment : Fragment() {
                 LoadingState.LOADING -> {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
-                    binding.errorTextView.visibility = View.GONE
+                    binding.errorLayout.visibility = View.GONE
                     Log.d("JobsFragment", "Loading jobs for page: $currentPage")
-
                 }
 
                 LoadingState.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
-                    binding.errorTextView.visibility = View.GONE
+                    binding.errorLayout.visibility = View.GONE
                 }
 
                 LoadingState.ERROR -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.GONE
-                    binding.errorTextView.apply {
-                        visibility = View.VISIBLE
-                        text = "Failed to load data. Please try again."
+                    binding.errorLayout.visibility = View.VISIBLE
+                    binding.retryButton.setOnClickListener {
+                        jobsViewModel.loadJobs(currentPage)
                     }
                 }
 
                 LoadingState.EMPTY -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.GONE
-                    binding.errorTextView.apply {
+                    binding.errorLayout.apply {
                         visibility = View.VISIBLE
-                        text = "No jobs available at the moment."
+                        binding.errorMessage.text = "No jobs available at the moment."
                     }
                 }
 
-                null -> { // Handle the null case
+                null -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.GONE
-                    binding.errorTextView.apply {
+                    binding.errorLayout.apply {
                         visibility = View.VISIBLE
-                        text = "Unexpected error. Please try again."
+                        binding.errorMessage.text = "Unexpected error. Please try again."
                     }
                 }
             }
         }
-
-        loadNextPage()  // Load the first page
     }
 
     private fun loadNextPage() {
