@@ -11,7 +11,7 @@ import com.akashsoam.jobhunt.models.Job
 class JobAdapter(private val onClick: (Job) -> Unit) :
     RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
 
-    private var jobs = listOf<Job>()
+    var jobs = listOf<Job>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val binding = ItemJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)

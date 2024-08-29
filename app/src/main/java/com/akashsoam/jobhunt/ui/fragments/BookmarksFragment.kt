@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentBookmarksBinding
 import com.akashsoam.jobhunt.models.Job
 import com.akashsoam.jobhunt.models.PrimaryDetails
 import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class BookmarksFragment : Fragment() {
 
@@ -73,6 +76,29 @@ class BookmarksFragment : Fragment() {
                 )
             })
         }
+
+
+        val itemTouchHelperCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val job = bookmarksAdapter.jobs[position]
+                jobsViewModel.deleteJob(job.id)
+                Snackbar.make(binding.root, "Job removed from bookmarks", Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerView)
+
     }
 
     override fun onDestroyView() {
