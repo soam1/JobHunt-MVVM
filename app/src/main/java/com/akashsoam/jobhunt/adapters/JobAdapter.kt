@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.akashsoam.jobhunt.R
 import com.akashsoam.jobhunt.databinding.ItemJobBinding
 import com.akashsoam.jobhunt.models.Job
 
-class JobAdapter(private val onClick: (Job) -> Unit) :
+class JobAdapter(
+    private val onClick: (Job) -> Unit,
+    private val bookmarkClickListener: (Job) -> Unit
+) :
     RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
 
     var jobs = listOf<Job>()
@@ -21,6 +25,15 @@ class JobAdapter(private val onClick: (Job) -> Unit) :
     override fun onBindViewHolder(holder: JobViewHolder, position: Int) {
         val job = jobs[position]
         holder.bind(job)
+        holder.binding.bookmarkButton.setImageResource(
+            if (job.is_bookmarked) R.drawable.ic_bookmark_fill else R.drawable.ic_bookmark_border
+        )
+
+        holder.binding.bookmarkButton.setOnClickListener {
+            job.is_bookmarked = !job.is_bookmarked
+            bookmarkClickListener(job)
+            notifyItemChanged(position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +45,7 @@ class JobAdapter(private val onClick: (Job) -> Unit) :
         notifyDataSetChanged()
     }
 
-    inner class JobViewHolder(private val binding: ItemJobBinding) :
+    inner class JobViewHolder(val binding: ItemJobBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(job: Job) {
             binding.apply {
@@ -45,9 +58,12 @@ class JobAdapter(private val onClick: (Job) -> Unit) :
                 if (job.primary_details != null) {
                     salary.text = job.primary_details.Salary
                 } else {
-                    salary.text = "Salary not available"
+                    salary.text = "Salary not disclosed"
                 }
                 phone.text = job.whatsapp_no
+                bookmarkButton.setImageResource(
+                    if (job.is_bookmarked) R.drawable.ic_bookmark_fill else R.drawable.ic_bookmark_border
+                )
                 root.setOnClickListener { onClick(job) }
             }
         }

@@ -64,7 +64,9 @@ class JobsViewModel(application: Application) : AndroidViewModel(application) {
 //                salary = job.primary_details.Salary,
                 whatsapp_no = job.whatsapp_no,
                 updated_on = job.updated_on
+
             )
+            job.is_bookmarked = true
             repository.saveJob(jobEntity)
         }
     }

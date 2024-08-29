@@ -44,12 +44,24 @@ class BookmarksFragment : Fragment() {
 //            //change the src of the ImageButton to unbookmarked
 //        }
 
-        bookmarksAdapter = JobAdapter { job ->
-            // Handle click on bookmarked job
-//            //go to the job details page
-            val action = BookmarksFragmentDirections.actionBookmarksFragmentToJobDetailFragment(job)
-            binding.root.findNavController().navigate(action)
-        }
+        bookmarksAdapter = JobAdapter(
+            onClick = { job ->
+                val action =
+                    BookmarksFragmentDirections.actionBookmarksFragmentToJobDetailFragment(job)
+                view.findNavController().navigate(action)
+            },
+            bookmarkClickListener = { job ->
+                jobsViewModel.deleteJob(job.id)
+                job.is_bookmarked = false
+                Snackbar.make(binding.root, "Job removed from bookmarks", Snackbar.LENGTH_SHORT)
+                    .setAction("Undo") {
+                        jobsViewModel.bookmarkJob(job)
+                        bookmarksAdapter.notifyDataSetChanged()
+                        //change the src of the ImageButton to bookmarked
+
+                    }.show()
+            }
+        )
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)

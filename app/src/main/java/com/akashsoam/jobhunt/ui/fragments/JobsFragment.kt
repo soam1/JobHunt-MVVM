@@ -14,6 +14,7 @@ import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentJobsBinding
 import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
 import com.akashsoam.jobhunt.util.LoadingState
+import com.google.android.material.snackbar.Snackbar
 
 class JobsFragment : Fragment() {
 
@@ -35,10 +36,18 @@ class JobsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
-        jobsAdapter = JobAdapter { job ->
+        jobsAdapter = JobAdapter(onClick = { job ->
             val action = JobsFragmentDirections.actionJobsFragmentToJobDetailFragment(job)
             findNavController().navigate(action)
-        }
+        }, bookmarkClickListener = { job ->
+            jobsViewModel.bookmarkJob(job)
+            jobsAdapter.notifyDataSetChanged()
+            Snackbar.make(binding.root, "Job bookmarked", Snackbar.LENGTH_SHORT).setAction("Undo") {
+                jobsViewModel.deleteJob(job.id)
+                job.is_bookmarked = false
+                jobsAdapter.notifyDataSetChanged()
+            }.show()
+        })
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
