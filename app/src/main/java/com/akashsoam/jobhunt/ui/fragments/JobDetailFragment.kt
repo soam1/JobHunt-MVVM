@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.akashsoam.jobhunt.R
 import com.akashsoam.jobhunt.databinding.FragmentJobDetailBinding
 import com.akashsoam.jobhunt.models.Job
 import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
@@ -38,10 +39,36 @@ class JobDetailFragment : Fragment() {
                 location.text = jobDetails.primary_details?.Place
                 salary.text = jobDetails.primary_details?.Salary
                 phone.text = jobDetails.whatsapp_no
+                bookmarkButton.setImageResource(
+                    if (jobDetails.is_bookmarked) {
+                        R.drawable.ic_bookmark_fill
+                    } else {
+                        R.drawable.ic_bookmark_border
+                    }
+                )
                 bookmarkButton.setOnClickListener {
-                    jobsViewModel.bookmarkJob(jobDetails)
-//                    Toast.makeText(context, "Job bookmarked", Toast.LENGTH_SHORT).show()
-                    Snackbar.make(view, "Job bookmarked", Snackbar.LENGTH_SHORT).show()
+                    if (jobDetails.is_bookmarked) {
+                        jobDetails.is_bookmarked = false
+                        jobsViewModel.deleteJob(jobDetails.id)
+                        Snackbar.make(view, "Job removed from bookmarks", Snackbar.LENGTH_SHORT)
+                            .setAction("Undo") {
+                                jobsViewModel.bookmarkJob(jobDetails)
+                                jobDetails.is_bookmarked = true
+                            }.show()
+                        bookmarkButton.setImageResource(R.drawable.ic_bookmark_border)
+                    } else {
+                        jobDetails.is_bookmarked = true
+                        jobsViewModel.bookmarkJob(jobDetails)
+                        Snackbar.make(view, "Job bookmarked", Snackbar.LENGTH_SHORT)
+                            .setAction("Undo") {
+                                jobsViewModel.deleteJob(jobDetails.id)
+                                jobDetails.is_bookmarked = false
+                                //notify adapters notifydatasetchanged
+
+                            }.show()
+                        bookmarkButton.setImageResource(R.drawable.ic_bookmark_fill)
+                    }
+
                 }
             }
         } ?: run {
