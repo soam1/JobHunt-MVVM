@@ -3,7 +3,6 @@ package com.akashsoam.jobhunt.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.akashsoam.jobhunt.R
 import com.akashsoam.jobhunt.databinding.ItemJobBinding
@@ -71,12 +70,12 @@ class JobAdapter(
 }
 
 
-class JobDiffCallback : DiffUtil.ItemCallback<Job>() {
-    override fun areItemsTheSame(oldItem: Job, newItem: Job): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Job, newItem: Job): Boolean {
-        return oldItem == newItem
-    }
-}
+//class JobDiffCallback : DiffUtil.ItemCallback<Job>() {
+//    override fun areItemsTheSame(oldItem: Job, newItem: Job): Boolean {
+//        return oldItem.id == newItem.id
+//    }
+//
+//    override fun areContentsTheSame(oldItem: Job, newItem: Job): Boolean {
+//        return oldItem == newItem
+//    }
+//}

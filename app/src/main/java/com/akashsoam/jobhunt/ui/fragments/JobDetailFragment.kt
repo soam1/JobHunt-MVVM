@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.akashsoam.jobhunt.R
 import com.akashsoam.jobhunt.databinding.FragmentJobDetailBinding
 import com.akashsoam.jobhunt.models.Job
-import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
+import com.akashsoam.jobhunt.ui.JobsViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class JobDetailFragment : Fragment() {
@@ -72,7 +72,6 @@ class JobDetailFragment : Fragment() {
                 }
             }
         } ?: run {
-            // Handle the case where the job is null (optional)
             binding.title.text = "Job details unavailable"
         }
     }

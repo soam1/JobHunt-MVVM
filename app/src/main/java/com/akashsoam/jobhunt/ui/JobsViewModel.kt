@@ -1,4 +1,4 @@
-package com.akashsoam.jobhunt.ui.viewmodel
+package com.akashsoam.jobhunt.ui
 
 import android.app.Application
 import android.util.Log

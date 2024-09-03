@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.akashsoam.jobhunt.repository.JobsRepository
-import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
 
 class JobsViewModelFactory(private val repository: JobsRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

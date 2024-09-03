@@ -14,7 +14,7 @@ import com.akashsoam.jobhunt.adapters.JobAdapter
 import com.akashsoam.jobhunt.databinding.FragmentBookmarksBinding
 import com.akashsoam.jobhunt.models.Job
 import com.akashsoam.jobhunt.models.PrimaryDetails
-import com.akashsoam.jobhunt.ui.viewmodel.JobsViewModel
+import com.akashsoam.jobhunt.ui.JobsViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class BookmarksFragment : Fragment() {
