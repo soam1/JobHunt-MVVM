@@ -36,6 +36,7 @@ class BookmarksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+
 //        bookmarksAdapter = JobAdapter { jobEntity ->
 //            // Handle click on bookmarked job
 //            jobsViewModel.deleteJob(jobEntity.id)
