@@ -10,5 +10,8 @@ data class Job(
     val whatsapp_no: String,  // Represents the phone number
     var is_bookmarked: Boolean,
     val updated_on: String
-) : Serializable
+) : Serializable{
+
+
+}
 

@@ -123,6 +123,7 @@ class JobsFragment : Fragment() {
             }
         }
     }
+    
 
     private fun loadNextPage() {
         isLoading = true

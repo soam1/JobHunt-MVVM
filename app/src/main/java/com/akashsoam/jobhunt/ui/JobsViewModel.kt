@@ -44,6 +44,20 @@ class JobsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+//    fun work(job: Job) {
+////        viewModelScope.launch {
+////            bookmarkJob(job)
+////            postJobOnApi(job)
+////        }
+//
+//        postJobOnApi(job).await()
+//    }
+//
+//    async fun postJobOnApi(job: Job) {
+//
+//    }
+
+
     fun bookmarkJob(job: Job) {
         viewModelScope.launch(Dispatchers.IO) {
             val jobEntity = JobEntity(
