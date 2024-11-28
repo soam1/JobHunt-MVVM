@@ -118,9 +118,11 @@ This project follows the **MVVM (Model-View-ViewModel)** architecture pattern:
   viewing.
 - **Viewing Bookmarks:** Switch to the Bookmarks tab to see all your saved jobs.
 
-## Video Demo
+**Project Demo**
 
-[![Video Demo](./job_hunt_mvvm_demo_vdo.mp4)]
+See the application in action in the following video:
+
+[JobHunt MVVM Demo](job_hunt_mvvm_demo_vdo.mp4)
 
 
 ## Contributing
