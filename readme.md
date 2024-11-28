@@ -121,6 +121,8 @@ This project follows the **MVVM (Model-View-ViewModel)** architecture pattern:
 ## Video Demo
 
 [![Video Demo](./job hunt mvvm demo vdo.mp4)]
+[Video Title](./job_hunt_mvvm_demo_vdo.mp4)
+
 
 ## Contributing
 
